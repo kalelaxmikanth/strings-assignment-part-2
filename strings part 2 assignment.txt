@@ -1,0 +1,155 @@
+1
+#include <iostream>
+#include <string>
+
+int main() {
+    std::string input_str = "PWSkills";
+    std::string reversed_str = "";
+    
+    // Reverse the string
+    for (int i = input_str.length() - 1; i >= 0; --i) {
+        reversed_str += input_str[i];
+    }
+
+    // Concatenate and print
+    std::string concatenated_str = input_str + reversed_str;
+    std::cout << concatenated_str << std::endl;
+
+    return 0;
+}
+2
+#include <iostream>
+#include <string>
+
+int main() {
+    std::string input_str = "2947578";
+    int first_max = -1, second_max = -1;
+    
+    for (char c : input_str) {
+        if (isdigit(c)) {
+            int digit = c - '0';
+            if (digit > first_max) {
+                second_max = first_max;
+                first_max = digit;
+            } else if (digit > second_max && digit < first_max) {
+                second_max = digit;
+            }
+        }
+    }
+
+    if (second_max != -1) {
+        std::cout << second_max << std::endl;
+    } else {
+        std::cout << "No second largest digit found." << std::endl;
+    }
+
+    return 0;
+}
+3
+#include <iostream>
+#include <string>
+
+bool isVowel(char c) {
+    return (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' ||
+            c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U');
+}
+
+int main() {
+    std::string input_str = "abjkoe";
+    int count = 0;
+
+    for (int i = 0; i < input_str.length(); ++i) {
+        for (int j = i; j < input_str.length(); ++j) {
+            std::string substr = input_str.substr(i, j - i + 1);
+            bool is_vowel_substring = true;
+            for (char c : substr) {
+                if (!isVowel(c)) {
+                    is_vowel_substring = false;
+                    break;
+                }
+            }
+            if (is_vowel_substring) {
+                count++;
+            }
+        }
+    }
+
+    std::cout << count << std::endl;
+
+    return 0;
+}
+4
+#include <iostream>
+#include <string>
+#include <unordered_map>
+
+bool areAnagrams(std::string s, std::string t) {
+    if (s.length() != t.length()) {
+        return false;
+    }
+
+    std::unordered_map<char, int> charCount;
+
+    for (char c : s) {
+        charCount[c]++;
+    }
+
+    for (char c : t) {
+        if (charCount.find(c) == charCount.end() || charCount[c] == 0) {
+            return false;
+        }
+        charCount[c]--;
+    }
+
+    return true;
+}
+
+int main() {
+    std::string s = "car";
+    std::string t = "arc";
+
+    if (areAnagrams(s, t)) {
+        std::cout << "True" << std::endl;
+    } else {
+        std::cout << "False" << std::endl;
+    }
+
+    return 0;
+}
+5
+#include <iostream>
+#include <string>
+
+std::string lexicographicallyMaximumWord(std::string sentence) {
+    std::string maxWord = "";
+    std::string currentWord = "";
+    bool inWord = false;
+
+    for (char c : sentence) {
+        if (isalpha(c)) {
+            currentWord += c;
+            inWord = true;
+        } else {
+            if (inWord && currentWord > maxWord) {
+                maxWord = currentWord;
+            }
+            currentWord = "";
+            inWord = false;
+        }
+    }
+
+    if (inWord && currentWord > maxWord) {
+        maxWord = currentWord;
+    }
+
+    return maxWord;
+}
+
+int main() {
+    std::string sentence = "proud to be pwians";
+    std::string maxWord = lexicographicallyMaximumWord(sentence);
+    std::cout << maxWord << std::endl;
+
+    return 0;
+}
+
